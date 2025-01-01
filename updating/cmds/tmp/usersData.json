@@ -1,0 +1,67 @@
+[
+  {
+    "userID": "61569230323940",
+    "name": "Bishwo Xettri",
+    "gender": 2,
+    "vanity": "",
+    "exp": 237,
+    "money": 0,
+    "banned": {},
+    "settings": {},
+    "data": {},
+    "createdAt": "2024-12-30T05:10:19.727Z",
+    "updatedAt": "2024-12-30T10:35:07.847Z"
+  },
+  {
+    "userID": "61571249576714",
+    "name": "Shristi Magar",
+    "gender": 1,
+    "vanity": "",
+    "exp": 5,
+    "money": 0,
+    "banned": {},
+    "settings": {},
+    "data": {},
+    "createdAt": "2024-12-30T05:10:20.979Z",
+    "updatedAt": "2024-12-30T10:13:46.861Z"
+  },
+  {
+    "userID": "61571490411026",
+    "name": "Last Wish",
+    "gender": 2,
+    "vanity": "",
+    "exp": 24,
+    "money": 0,
+    "banned": {},
+    "settings": {},
+    "data": {},
+    "createdAt": "2024-12-30T05:48:46.811Z",
+    "updatedAt": "2024-12-30T09:11:19.173Z"
+  },
+  {
+    "userID": "61567763409206",
+    "name": "SD KC",
+    "gender": 2,
+    "vanity": "",
+    "exp": 3,
+    "money": 0,
+    "banned": {},
+    "settings": {},
+    "data": {},
+    "createdAt": "2024-12-30T06:54:25.622Z",
+    "updatedAt": "2024-12-30T06:54:30.574Z"
+  },
+  {
+    "userID": "61551380116641",
+    "name": "Ain't Biplov",
+    "gender": 2,
+    "vanity": "",
+    "exp": 0,
+    "money": 0,
+    "banned": {},
+    "settings": {},
+    "data": {},
+    "createdAt": "2024-12-30T10:25:52.763Z",
+    "updatedAt": "2024-12-30T10:25:52.763Z"
+  }
+]

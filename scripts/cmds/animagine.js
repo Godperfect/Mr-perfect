@@ -1,3 +1,4 @@
+const { GoatWrapper } = require('fca-liane-utils');
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
@@ -9,11 +10,11 @@ module.exports = {
     aliases: [],
     version: "1.0",
     author: "Kshitiz",
-    countDown: 0,
+    countDown: 20,
     role: 0,
     shortDescription: "Generate an anime style image.",
     longDescription: "Generate an anime style image",
-    category: "ai",
+    category: "image-gen",
     guide: {
       en: "{p}imagine [prompt] | [model]"
     }
@@ -94,3 +95,5 @@ module.exports = {
     }
   }
 };
+const wrapper = new GoatWrapper(module.exports);
+wrapper.applyNoPrefix({ allowPrefix: true });

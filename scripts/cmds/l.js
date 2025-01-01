@@ -1,94 +1,250 @@
 const Groq = require('groq-sdk');
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch');
-
-const apiKey = process.env.GROQ_API_KEY || 'YOUR_API_KEY'; // GET KEY FROM GROQ SITE
-const groq = new Groq({ apiKey });
 
 const chatHistoryDir = 'groqllama70b';
+const apiKey = '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';
 
-const systemPrompt = `You are a highly capable AI assistant powered by Llama 3 70B. Follow these guidelines in your responses:
+const groq = new Groq({ apiKey });
 
-RESPONSE STYLE:
-- Be direct and concise by default
-- Provide detailed responses only when specifically requested
-- Use clear, simple language while maintaining accuracy
-- Match the user's tone and level of formality
+const systemPrompt = "Examine the prompt and respond precisely as directed, omitting superfluous information. Provide brief responses, typically 1-2 sentences, except when detailed answers like essays, poems, or stories are requested.";
 
-RESPONSE FORMAT:
-- For general questions: Give 1-2 sentence answers
-- For technical topics: Include relevant examples if helpful
-- For analysis: Present key points in a structured way
-- For creative tasks: Follow specified format requirements
+module.exports = {
+    config: {
+        name: 'l',
+        aliases: ['llm'],
+        version: '1.1.8',
+        author: 'Shikaki',
+        countDown: 0,
+        role: 0,
+        category: 'Ai',
+        description: {
+            en: 'llama3 70b - groq.',
+        },
+        guide: {
+            en: '{pn} [question]',
+        },
+    },
+    onStart: async function ({ api, message, event, args, commandName }) {
+        var prompt = args.join(" ");
 
-SPECIAL HANDLING:
-- Code: Provide working, well-commented code
-- Math: Show step-by-step solutions
-- Complex topics: Break down into digestible parts
-- Lists/Steps: Use clear numbering or bullets
-- Creative writing: Follow any style/length requirements
+        let chatHistory = [];
 
-CONSTRAINTS:
-- Don't use disclaimers or qualifiers unless crucial
-- Don't apologize for being an AI
-- Don't repeat the question back
-- Don't add unnecessary pleasantries
-- Never make up information - say "I don't know" if uncertain
+        if (prompt.toLowerCase() === "clear") {
+            clearChatHistory(event.senderID);
+            message.reply("Chat history cleared!");
+            return;
+        }
 
-CONVERSATION FLOW:
-- Build on previous context when in a thread
-- Stay focused on the current topic
-- Ask for clarification only when truly needed
-- Remember key details from earlier in conversation
+        var content = (event.type == "message_reply") ? event.messageReply.body : args.join(" ");
+        var targetMessageID = (event.type == "message_reply") ? event.messageReply.messageID : event.messageID;
 
-OUTPUT LENGTH:
-- Default to brief responses
-- Expand only when:
-  * Explicitly requested
-  * Complex explanation needed
-  * Creative writing required
-  * Technical detail necessary
+        if (event.type == "message_reply") {
+            content = content + " " + prompt;
+            clearChatHistory(event.senderID);
 
-Always adapt your response style to best serve the user's needs while maintaining high accuracy and helpfulness.`;
+            api.setMessageReaction("⌛", event.messageID, () => { }, true);
 
-async function processGroqChat(uid, prompt, existingHistory = []) {
-    const chatHistory = existingHistory.length > 0 ? existingHistory : loadChatHistory(uid);
-    
-    const chatMessages = [
-        { role: "system", content: systemPrompt },
-        ...chatHistory,
-        { role: "user", content: prompt }
-    ];
+            const startTime = Date.now();
 
-    const chatCompletion = await groq.chat.completions.create({
-        messages: chatMessages,
-        model: "llama3-70b-8192",
-        temperature: 0.6,
-        max_tokens: 8192,
-        top_p: 0.8,
-        stream: false,
-        stop: null
-    });
+            try {
+                clearChatHistory(event.senderID);
 
-    const assistantResponse = chatCompletion.choices[0].message.content;
-    
-    chatHistory.push({ role: "user", content: prompt });
-    chatHistory.push({ role: "assistant", content: assistantResponse });
-    appendToChatHistory(uid, chatHistory);
+                const chatMessages = [
+                    { "role": "system", "content": systemPrompt },
+                    { "role": "user", "content": content }
+                ];
 
-    return assistantResponse;
-}
+                const chatCompletion = await groq.chat.completions.create({
+                    "messages": chatMessages,
+                    "model": "llama3-70b-8192",
+                    "temperature": 0.6,
+                    "max_tokens": 8192,
+                    "top_p": 0.8,
+                    "stream": false,
+                    "stop": null
+                });
+
+                const assistantResponse = chatCompletion.choices[0].message.content;
+
+                const endTime = new Date().getTime();
+                const completionTime = ((endTime - startTime) / 1000).toFixed(2);
+                const totalWords = assistantResponse.split(/\s+/).filter(word => word !== '').length;
+
+                let finalMessage = `${assistantResponse}\n\nCompletion time: ${completionTime} seconds\nTotal words: ${totalWords}`;
+
+                api.sendMessage(finalMessage, event.threadID, (err, info) => {
+                    if (!err) {
+                        global.GoatBot.onReply.set(info.messageID, {
+                            commandName,
+                            messageID: info.messageID,
+                            author: event.senderID,
+                            replyToMessageID: targetMessageID
+                        });
+                    } else {
+                        console.error("Error sending message:", err);
+                    }
+                });
+
+                chatHistory.push({ role: "user", content: prompt });
+                chatHistory.push({ role: "assistant", content: assistantResponse });
+                appendToChatHistory(targetMessageID, chatHistory);
+
+                api.setMessageReaction("✅", event.messageID, () => { }, true);
+            } catch (error) {
+                console.error("Error in chat completion:", error);
+                api.setMessageReaction("❌", event.messageID, () => { }, true);
+                return message.reply(`An error occurred: ${error}`, event.threadID, event.messageID);
+            }
+        }
+        else {
+            clearChatHistory(event.senderID);
+
+            if (args.length == 0 && prompt == "") {
+                message.reply("Please provide a prompt.");
+                return;
+            }
+
+            api.setMessageReaction("⌛", event.messageID, () => { }, true);
+
+            const startTime = Date.now();
+
+            try {
+                clearChatHistory(event.senderID);
+
+                const chatMessages = [
+                    { "role": "system", "content": systemPrompt },
+                    { "role": "user", "content": prompt }
+                ];
+
+                const chatCompletion = await groq.chat.completions.create({
+                    "messages": chatMessages,
+                    "model": "llama3-70b-8192",
+                    "temperature": 0.6,
+                    "max_tokens": 8192,
+                    "top_p": 0.8,
+                    "stream": false,
+                    "stop": null
+                });
+
+                const assistantResponse = chatCompletion.choices[0].message.content;
+
+                const endTime = new Date().getTime();
+                const completionTime = ((endTime - startTime) / 1000).toFixed(2);
+                const totalWords = assistantResponse.split(/\s+/).filter(word => word !== '').length;
+
+                let finalMessage = `${assistantResponse}\n\nCompletion time: ${completionTime} seconds\nTotal words: ${totalWords}`;
+
+                api.sendMessage(finalMessage, event.threadID, (err, info) => {
+                    if (!err) {
+                        global.GoatBot.onReply.set(info.messageID, {
+                            commandName,
+                            messageID: info.messageID,
+                            author: event.senderID,
+                            replyToMessageID: event.messageID
+                        });
+                    } else {
+                        console.error("Error sending message:", err);
+                    }
+                });
+
+                chatHistory.push({ role: "user", content: prompt });
+                chatHistory.push({ role: "assistant", content: assistantResponse });
+                appendToChatHistory(event.senderID, chatHistory);
+
+                api.setMessageReaction("✅", event.messageID, () => { }, true);
+            } catch (error) {
+                console.error("Error in chat completion:", error);
+                api.setMessageReaction("❌", event.messageID, () => { }, true);
+                return message.reply(`An error occurred: ${error}`, event.threadID, event.messageID);
+            }
+        }
+    },
+    onReply: async function ({ api, message, event, Reply, args }) {
+        var prompt = args.join(" ");
+        let { author, commandName } = Reply;
+
+        if (event.senderID !== author) return;
+
+        if (prompt.toLowerCase() === "clear") {
+            clearChatHistory(author);
+            message.reply("Chat history cleared!");
+            return;
+        }
+
+        api.setMessageReaction("⌛", event.messageID, () => { }, true);
+
+        const startTime = Date.now();
+
+        try {
+            const chatHistory = loadChatHistory(event.senderID);
+
+            const chatMessages = [
+                { "role": "system", "content": systemPrompt },
+                ...chatHistory,
+                { "role": "user", "content": prompt }
+            ];
+
+            const chatCompletion = await groq.chat.completions.create({
+                "messages": chatMessages,
+                "model": "llama3-70b-8192",
+                "temperature": 0.6,
+                "max_tokens": 8192,
+                "top_p": 0.8,
+                "stream": false,
+                "stop": null
+            });
+
+            const assistantResponse = chatCompletion.choices[0].message.content;
+
+            const endTime = new Date().getTime();
+            const completionTime = ((endTime - startTime) / 1000).toFixed(2);
+            const totalWords = assistantResponse.split(/\s+/).filter(word => word !== '').length;
+
+            let finalMessage = `${assistantResponse}\n\nCompletion time: ${completionTime} seconds\nTotal words: ${totalWords}`;
+
+            message.reply(finalMessage, (err, info) => {
+                if (!err) {
+                    global.GoatBot.onReply.set(info.messageID, {
+                        commandName,
+                        messageID: info.messageID,
+                        author: event.senderID,
+                    });
+                } else {
+                    console.error("Error sending message:", err);
+                }
+            });
+
+            chatHistory.push({ role: "user", content: prompt });
+            chatHistory.push({ role: "assistant", content: assistantResponse });
+            appendToChatHistory(event.senderID, chatHistory);
+
+            api.setMessageReaction("✅", event.messageID, () => { }, true);
+        } catch (error) {
+            console.error("Error in chat completion:", error);
+            message.reply(error.message);
+            api.setMessageReaction("❌", event.messageID, () => { }, true);
+        }
+    }
+};
 
 function loadChatHistory(uid) {
     const chatHistoryFile = path.join(chatHistoryDir, `memory_${uid}.json`);
-    
+
     try {
         if (fs.existsSync(chatHistoryFile)) {
             const fileData = fs.readFileSync(chatHistoryFile, 'utf8');
-            return JSON.parse(fileData);
+            const chatHistory = JSON.parse(fileData);
+            return chatHistory.map((message) => {
+                if (message.role === "user" && message.parts) {
+                    return { role: "user", content: message.parts[0].text };
+                } else {
+                    return message;
+                }
+            });
+        } else {
+            return [];
         }
-        return [];
     } catch (error) {
         console.error(`Error loading chat history for UID ${uid}:`, error);
         return [];
@@ -97,11 +253,12 @@ function loadChatHistory(uid) {
 
 function appendToChatHistory(uid, chatHistory) {
     const chatHistoryFile = path.join(chatHistoryDir, `memory_${uid}.json`);
-    
+
     try {
         if (!fs.existsSync(chatHistoryDir)) {
             fs.mkdirSync(chatHistoryDir);
         }
+
         fs.writeFileSync(chatHistoryFile, JSON.stringify(chatHistory, null, 2));
     } catch (error) {
         console.error(`Error saving chat history for UID ${uid}:`, error);
@@ -110,120 +267,10 @@ function appendToChatHistory(uid, chatHistory) {
 
 function clearChatHistory(uid) {
     const chatHistoryFile = path.join(chatHistoryDir, `memory_${uid}.json`);
+
     try {
-        if (fs.existsSync(chatHistoryFile)) {
-            fs.unlinkSync(chatHistoryFile);
-            return true;
-        }
-        return false;
-    } catch (error) {
-        console.error(`Error clearing chat history for UID ${uid}:`, error);
-        return false;
+        fs.unlinkSync(chatHistoryFile);
+    } catch (err) {
+        console.error("Error deleting chat history file:", err);
     }
 }
-
-module.exports = {
-    config: {
-        name: 'l',
-        version: '1.2.0',
-        author: 'Shikaki || Optimisd by Priyanshi Kaur',
-        countDown: 0,
-        role: 0,
-        category: 'Ai',
-        description: {
-            en: 'Fast AI responses using Llama3 70b hosted on Groq',
-        },
-        guide: {
-            en: '{pn} [question]\n\nReply clear to clear chat history\nOr use:\n{pn} clear',
-        },
-    },
-
-    onStart: async function ({ api, message, event, args, commandName }) {
-        const prompt = args.join(" ");
-        const uid = event.senderID;
-
-        if (prompt.toLowerCase() === "clear") {
-            if (clearChatHistory(uid)) {
-                return message.reply("Chat history cleared successfully!");
-            }
-            return message.reply("No chat history found to clear.");
-        }
-
-        let content = prompt;
-        if (event.type === "message_reply") {
-            content = `${event.messageReply.body} ${prompt}`.trim();
-        }
-
-        if (!content) {
-            return message.reply("Please provide a prompt.");
-        }
-
-        api.setMessageReaction("⌛", event.messageID, () => { }, true);
-        const startTime = Date.now();
-
-        try {
-            const response = await processGroqChat(uid, content);
-            const completionTime = ((Date.now() - startTime) / 1000).toFixed(2);
-            const wordCount = response.split(/\s+/).filter(Boolean).length;
-
-            const finalMessage = `${response}\n\nCompletion time: ${completionTime} seconds\nTotal words: ${wordCount}`;
-
-            message.reply(finalMessage, (err, info) => {
-                if (!err) {
-                    global.GoatBot.onReply.set(info.messageID, {
-                        commandName,
-                        messageID: info.messageID,
-                        author: event.senderID
-                    });
-                }
-            });
-
-            api.setMessageReaction("✅", event.messageID, () => { }, true);
-        } catch (error) {
-            console.error("Error:", error);
-            message.reply("An error occurred while processing your request.");
-            api.setMessageReaction("❌", event.messageID, () => { }, true);
-        }
-    },
-
-    onReply: async function ({ api, message, event, Reply, args }) {
-        const { author, commandName } = Reply;
-        
-        if (event.senderID !== author) return;
-
-        const prompt = args.join(" ");
-        if (prompt.toLowerCase() === "clear") {
-            if (clearChatHistory(author)) {
-                return message.reply("Chat history cleared successfully!");
-            }
-            return message.reply("No chat history found to clear.");
-        }
-
-        api.setMessageReaction("⌛", event.messageID, () => { }, true);
-        const startTime = Date.now();
-
-        try {
-            const response = await processGroqChat(author, prompt);
-            const completionTime = ((Date.now() - startTime) / 1000).toFixed(2);
-            const wordCount = response.split(/\s+/).filter(Boolean).length;
-
-            const finalMessage = `${response}\n\nCompletion time: ${completionTime} seconds\nTotal words: ${wordCount}`;
-
-            message.reply(finalMessage, (err, info) => {
-                if (!err) {
-                    global.GoatBot.onReply.set(info.messageID, {
-                        commandName,
-                        messageID: info.messageID,
-                        author: event.senderID
-                    });
-                }
-            });
-
-            api.setMessageReaction("✅", event.messageID, () => { }, true);
-        } catch (error) {
-            console.error("Error:", error);
-            message.reply("An error occurred while processing your request.");
-            api.setMessageReaction("❌", event.messageID, () => { }, true);
-        }
-    }
-};

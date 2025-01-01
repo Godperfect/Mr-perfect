@@ -1,0 +1,754 @@
+[
+  {
+    "name": "ownet",
+    "usage": 1
+  },
+  {
+    "name": "",
+    "usage": 24
+  },
+  {
+    "name": "$",
+    "usage": 3
+  },
+  {
+    "name": "dalle",
+    "usage": 1
+  },
+  {
+    "name": "gpt",
+    "usage": 8
+  },
+  {
+    "name": "unsend",
+    "usage": 7
+  },
+  {
+    "name": "4k",
+    "usage": 1
+  },
+  {
+    "name": "help",
+    "usage": 13
+  },
+  {
+    "name": "acp",
+    "usage": 13
+  },
+  {
+    "name": "anime",
+    "usage": 5
+  },
+  {
+    "name": "lado",
+    "usage": 1
+  },
+  {
+    "name": "l",
+    "usage": 2
+  },
+  {
+    "name": "adc",
+    "usage": 3
+  },
+  {
+    "name": "messi",
+    "usage": 3
+  },
+  {
+    "name": "admin",
+    "usage": 5
+  },
+  {
+    "name": "ag",
+    "usage": 13
+  },
+  {
+    "name": "cmdstore",
+    "usage": 3
+  },
+  {
+    "name": "antiout",
+    "usage": 2
+  },
+  {
+    "name": "remove",
+    "usage": 1
+  },
+  {
+    "name": "cs",
+    "usage": 7
+  },
+  {
+    "name": "images",
+    "usage": 1
+  },
+  {
+    "name": "image",
+    "usage": 1
+  },
+  {
+    "name": "gay",
+    "usage": 1
+  },
+  {
+    "name": "age",
+    "usage": 1
+  },
+  {
+    "name": "aibhi",
+    "usage": 1
+  },
+  {
+    "name": "ai",
+    "usage": 4
+  },
+  {
+    "name": "sing",
+    "usage": 9
+  },
+  {
+    "name": "all",
+    "usage": 2
+  },
+  {
+    "name": "amv",
+    "usage": 1
+  },
+  {
+    "name": "album",
+    "usage": 10
+  },
+  {
+    "name": "anigen",
+    "usage": 3
+  },
+  {
+    "name": "del",
+    "usage": 9
+  },
+  {
+    "name": "anigif",
+    "usage": 5
+  },
+  {
+    "name": "animagine",
+    "usage": 1
+  },
+  {
+    "name": "animesong",
+    "usage": 4
+  },
+  {
+    "name": "animetrend",
+    "usage": 1
+  },
+  {
+    "name": "animex",
+    "usage": 3
+  },
+  {
+    "name": "anipic",
+    "usage": 11
+  },
+  {
+    "name": "autoseen",
+    "usage": 1
+  },
+  {
+    "name": "clean",
+    "usage": 2
+  },
+  {
+    "name": "aniquiz",
+    "usage": 1
+  },
+  {
+    "name": "aniquotes",
+    "usage": 1
+  },
+  {
+    "name": "aniquote",
+    "usage": 1
+  },
+  {
+    "name": "animequotes",
+    "usage": 1
+  },
+  {
+    "name": "anisearch",
+    "usage": 2
+  },
+  {
+    "name": "anistatus",
+    "usage": 1
+  },
+  {
+    "name": "anitrace",
+    "usage": 3
+  },
+  {
+    "name": "anivid",
+    "usage": 1
+  },
+  {
+    "name": "anivideo",
+    "usage": 2
+  },
+  {
+    "name": "aniwatch",
+    "usage": 3
+  },
+  {
+    "name": "anivoice",
+    "usage": 1
+  },
+  {
+    "name": "anp",
+    "usage": 3
+  },
+  {
+    "name": "antichangeinfobox",
+    "usage": 2
+  },
+  {
+    "name": "anya",
+    "usage": 2
+  },
+  {
+    "name": "anya1",
+    "usage": 3
+  },
+  {
+    "name": "war",
+    "usage": 1
+  },
+  {
+    "name": "ascart",
+    "usage": 1
+  },
+  {
+    "name": "autolink",
+    "usage": 1
+  },
+  {
+    "name": "backupdata",
+    "usage": 1
+  },
+  {
+    "name": "badwords",
+    "usage": 4
+  },
+  {
+    "name": "balance",
+    "usage": 1
+  },
+  {
+    "name": "ball",
+    "usage": 4
+  },
+  {
+    "name": "banlist",
+    "usage": 2
+  },
+  {
+    "name": "bigtext",
+    "usage": 1
+  },
+  {
+    "name": "bigtxt",
+    "usage": 1
+  },
+  {
+    "name": "botsay",
+    "usage": 1
+  },
+  {
+    "name": "box",
+    "usage": 6
+  },
+  {
+    "name": "pin",
+    "usage": 1
+  },
+  {
+    "name": "pinterest",
+    "usage": 1
+  },
+  {
+    "name": "brojar",
+    "usage": 1
+  },
+  {
+    "name": "berojgar",
+    "usage": 1
+  },
+  {
+    "name": "buttslap",
+    "usage": 12
+  },
+  {
+    "name": "calculate",
+    "usage": 2
+  },
+  {
+    "name": "calender",
+    "usage": 1
+  },
+  {
+    "name": "card",
+    "usage": 2
+  },
+  {
+    "name": "catchpastebin",
+    "usage": 1
+  },
+  {
+    "name": "cc",
+    "usage": 2
+  },
+  {
+    "name": "chord",
+    "usage": 1
+  },
+  {
+    "name": "chords",
+    "usage": 1
+  },
+  {
+    "name": "coinflip",
+    "usage": 1
+  },
+  {
+    "name": "collage",
+    "usage": 1
+  },
+  {
+    "name": "convert",
+    "usage": 3
+  },
+  {
+    "name": "link",
+    "usage": 1
+  },
+  {
+    "name": "corn",
+    "usage": 3
+  },
+  {
+    "name": "country",
+    "usage": 1
+  },
+  {
+    "name": "cry",
+    "usage": 2
+  },
+  {
+    "name": "dance",
+    "usage": 1
+  },
+  {
+    "name": "drip",
+    "usage": 4
+  },
+  {
+    "name": "edit",
+    "usage": 1
+  },
+  {
+    "name": "emojimix",
+    "usage": 4
+  },
+  {
+    "name": "event",
+    "usage": 1
+  },
+  {
+    "name": "evilinsult",
+    "usage": 3
+  },
+  {
+    "name": "evilinsutl",
+    "usage": 1
+  },
+  {
+    "name": "ffedit",
+    "usage": 1
+  },
+  {
+    "name": "ffshort",
+    "usage": 1
+  },
+  {
+    "name": "fbacc",
+    "usage": 1
+  },
+  {
+    "name": "fbcover",
+    "usage": 1
+  },
+  {
+    "name": "filter",
+    "usage": 2
+  },
+  {
+    "name": "fbledit",
+    "usage": 1
+  },
+  {
+    "name": "frogjump",
+    "usage": 1
+  },
+  {
+    "name": "fun2",
+    "usage": 1
+  },
+  {
+    "name": "fv",
+    "usage": 1
+  },
+  {
+    "name": "fyp",
+    "usage": 4
+  },
+  {
+    "name": "g",
+    "usage": 7
+  },
+  {
+    "name": "genx",
+    "usage": 1
+  },
+  {
+    "name": "getfbstate",
+    "usage": 1
+  },
+  {
+    "name": "giphy",
+    "usage": 2
+  },
+  {
+    "name": "girl",
+    "usage": 1
+  },
+  {
+    "name": "github",
+    "usage": 3
+  },
+  {
+    "name": "gn",
+    "usage": 6
+  },
+  {
+    "name": "gender",
+    "usage": 1
+  },
+  {
+    "name": "googleimg",
+    "usage": 11
+  },
+  {
+    "name": "googleit",
+    "usage": 3
+  },
+  {
+    "name": "googlesearch",
+    "usage": 1
+  },
+  {
+    "name": "gname",
+    "usage": 3
+  },
+  {
+    "name": "gpa",
+    "usage": 9
+  },
+  {
+    "name": "percentage",
+    "usage": 1
+  },
+  {
+    "name": "grotag",
+    "usage": 1
+  },
+  {
+    "name": "grptag",
+    "usage": 1
+  },
+  {
+    "name": "grouptag",
+    "usage": 4
+  },
+  {
+    "name": "group",
+    "usage": 1
+  },
+  {
+    "name": "join",
+    "usage": 4
+  },
+  {
+    "name": "joke",
+    "usage": 1
+  },
+  {
+    "name": "khaby",
+    "usage": 1
+  },
+  {
+    "name": "lb",
+    "usage": 3
+  },
+  {
+    "name": "listbox",
+    "usage": 1
+  },
+  {
+    "name": "livescore",
+    "usage": 1
+  },
+  {
+    "name": "lv",
+    "usage": 2
+  },
+  {
+    "name": "malnews",
+    "usage": 1
+  },
+  {
+    "name": "mangadex",
+    "usage": 2
+  },
+  {
+    "name": "mark",
+    "usage": 1
+  },
+  {
+    "name": "married",
+    "usage": 2
+  },
+  {
+    "name": "marry",
+    "usage": 2
+  },
+  {
+    "name": "media",
+    "usage": 1
+  },
+  {
+    "name": "membercount",
+    "usage": 1
+  },
+  {
+    "name": "meme",
+    "usage": 2
+  },
+  {
+    "name": "mia",
+    "usage": 1
+  },
+  {
+    "name": "mindgame",
+    "usage": 1
+  },
+  {
+    "name": "monitor",
+    "usage": 1
+  },
+  {
+    "name": "moon",
+    "usage": 1
+  },
+  {
+    "name": "movieinfo",
+    "usage": 4
+  },
+  {
+    "name": "mpn",
+    "usage": 1
+  },
+  {
+    "name": "music",
+    "usage": 1
+  },
+  {
+    "name": "musicinfo",
+    "usage": 1
+  },
+  {
+    "name": "nepmeme",
+    "usage": 1
+  },
+  {
+    "name": "news",
+    "usage": 1
+  },
+  {
+    "name": "neymar",
+    "usage": 1
+  },
+  {
+    "name": "nhentai",
+    "usage": 1
+  },
+  {
+    "name": "niji",
+    "usage": 1
+  },
+  {
+    "name": "nn",
+    "usage": 1
+  },
+  {
+    "name": "notice",
+    "usage": 17
+  },
+  {
+    "name": "up",
+    "usage": 2
+  },
+  {
+    "name": "uptime",
+    "usage": 2
+  },
+  {
+    "name": "notification",
+    "usage": 1
+  },
+  {
+    "name": "notify",
+    "usage": 3
+  },
+  {
+    "name": "ytstalk",
+    "usage": 1
+  },
+  {
+    "name": "ytmusic",
+    "usage": 1
+  },
+  {
+    "name": "weather",
+    "usage": 2
+  },
+  {
+    "name": "wp",
+    "usage": 1
+  },
+  {
+    "name": "accept",
+    "usage": 1
+  },
+  {
+    "name": "busy",
+    "usage": 7
+  },
+  {
+    "name": "callad",
+    "usage": 11
+  },
+  {
+    "name": "uid",
+    "usage": 2
+  },
+  {
+    "name": "off",
+    "usage": 1
+  },
+  {
+    "name": "as",
+    "usage": 2
+  },
+  {
+    "name": "wl",
+    "usage": 4
+  },
+  {
+    "name": "loadconfig",
+    "usage": 1
+  },
+  {
+    "name": "hack",
+    "usage": 3
+  },
+  {
+    "name": "sexy",
+    "usage": 2
+  },
+  {
+    "name": "beautiful",
+    "usage": 1
+  },
+  {
+    "name": "buttslapp",
+    "usage": 1
+  },
+  {
+    "name": "xxx",
+    "usage": 1
+  },
+  {
+    "name": "hot",
+    "usage": 1
+  },
+  {
+    "name": "buttslap@samreen",
+    "usage": 1
+  },
+  {
+    "name": "khate",
+    "usage": 1
+  },
+  {
+    "name": "nigh",
+    "usage": 1
+  },
+  {
+    "name": "night",
+    "usage": 1
+  },
+  {
+    "name": "hornyai",
+    "usage": 1
+  },
+  {
+    "name": "sky",
+    "usage": 2
+  },
+  {
+    "name": "horni",
+    "usage": 1
+  },
+  {
+    "name": "horny",
+    "usage": 1
+  },
+  {
+    "name": "helis",
+    "usage": 1
+  },
+  {
+    "name": "ytb",
+    "usage": 2
+  },
+  {
+    "name": "ytdl",
+    "usage": 3
+  },
+  {
+    "name": "pg",
+    "usage": 1
+  },
+  {
+    "name": "footballedit",
+    "usage": 1
+  },
+  {
+    "name": "getcpde",
+    "usage": 1
+  },
+  {
+    "name": "getcode",
+    "usage": 1
+  }
+]

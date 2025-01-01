@@ -1,0 +1,126 @@
+[
+  {
+    "threadID": "8887235218031796",
+    "threadName": "Devils Society",
+    "threadThemeID": null,
+    "emoji": null,
+    "adminIDs": [
+      "61569230323940"
+    ],
+    "imageSrc": null,
+    "approvalMode": false,
+    "members": [
+      {
+        "userID": "61551380116641",
+        "name": "Ain't Biplov",
+        "gender": "MALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 0,
+        "permissionConfigDashboard": false
+      },
+      {
+        "userID": "61565854934079",
+        "name": "Samreen Samreen",
+        "gender": "MALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 0,
+        "permissionConfigDashboard": false
+      },
+      {
+        "userID": "61568212130183",
+        "name": "Samriin Dhakall",
+        "gender": "MALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 0,
+        "permissionConfigDashboard": false
+      },
+      {
+        "userID": "61569230323940",
+        "name": "Bishwo Xettri",
+        "gender": "MALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 23,
+        "permissionConfigDashboard": false
+      },
+      {
+        "userID": "61571249576714",
+        "name": "Shristi Magar",
+        "gender": "FEMALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 0,
+        "permissionConfigDashboard": false
+      },
+      {
+        "userID": "61571490411026",
+        "name": "Last Wish",
+        "gender": "MALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 0,
+        "permissionConfigDashboard": false
+      }
+    ],
+    "banned": {},
+    "settings": {
+      "sendWelcomeMessage": true,
+      "sendLeaveMessage": true,
+      "sendRankupMessage": false,
+      "customCommand": true,
+      "antiout": true,
+      "simsimi": false
+    },
+    "data": {
+      "antiChangeInfoBox": {
+        "name": "Devils Society"
+      }
+    },
+    "isGroup": true,
+    "createdAt": "2024-12-30T05:10:17.547Z",
+    "updatedAt": "2024-12-30T10:35:07.919Z"
+  },
+  {
+    "threadID": "61567763409206",
+    "threadName": null,
+    "threadThemeID": null,
+    "emoji": null,
+    "adminIDs": [],
+    "imageSrc": null,
+    "approvalMode": false,
+    "members": [
+      {
+        "userID": "61567763409206",
+        "name": "SD KC",
+        "gender": "MALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 0,
+        "permissionConfigDashboard": false
+      },
+      {
+        "userID": "61571249576714",
+        "name": "Shristi Magar",
+        "gender": "FEMALE",
+        "nickname": null,
+        "inGroup": true,
+        "count": 0,
+        "permissionConfigDashboard": false
+      }
+    ],
+    "banned": {},
+    "settings": {
+      "sendWelcomeMessage": true,
+      "sendLeaveMessage": true,
+      "sendRankupMessage": false,
+      "customCommand": true
+    },
+    "data": {},
+    "isGroup": false,
+    "createdAt": "2024-12-30T06:54:22.998Z",
+    "updatedAt": "2024-12-30T06:54:31.524Z"
+  }
+]

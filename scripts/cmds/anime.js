@@ -1,72 +1,96 @@
+
 const axios = require("axios");
 const fs = require("fs-extra");
-const path = require("path");
 
 module.exports = {
+
   config: {
-    name: "anime",
-    aliases: ["waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", "blush", "smile", "wave", "highfive", "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"],
-    version: "1.4.0",
-    author: "Priyanshi Kaur",
-    countDown: 10,
+    name: 'anime',
+    version: '1.0',
+    author: 'Kshitiz',
+    countDown: 20,
     role: 0,
-    shortDescription: {
-      en: "Get random anime-style images with live feedback"
-    },
-    longDescription: {
-      en: "Fetch and send random anime-style images of various categories from the waifu.pics API, with real-time feedback through message reactions."
-    },
-    category: "anime",
+    shortDescription: 'Anime recommendations by genre',
+    longDescription: '',
+    category: 'media',
     guide: {
-      en: "{prefix}anime [category]\n\nAvailable categories: waifu, neko, shinobu, megumin, bully, cuddle, cry, hug, awoo, kiss, lick, pat, smug, bonk, yeet, blush, smile, wave, highfive, handhold, nom, bite, glomp, slap, kill, kick, happy, wink, poke, dance, cringe"
+      en: '{p}anime {genre}:- shonen | seinen | isekai',
     }
   },
 
-  onStart: async function ({ api, event, args }) {
-    const validCategories = ["waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", "blush", "smile", "wave", "highfive", "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"];
-    
-    let category = args[0]?.toLowerCase() || "waifu";
-    
-    if (!validCategories.includes(category)) {
-      api.setMessageReaction("❓", event.messageID, (err) => {}, true);
-      return api.sendMessage(`Invalid category. Available categories are: ${validCategories.join(", ")}`, event.threadID, event.messageID);
+  onStart: async function ({ api, event, message }) {
+    const messageBody = event.body.toLowerCase().trim();
+    if (messageBody === 'anime') {
+      await message.reply('Please specify genre.\n{p}anime {genre}:- shonen | seinen | isekai');
+      return;
     }
 
-    api.setMessageReaction("⏳", event.messageID, (err) => {}, true);
+    let genre;
+    if (messageBody.includes('shonen')) {
+      genre = 'shonen';
+    } else if (messageBody.includes('seinen')) {
+      genre = 'seinen';
+    } else if (messageBody.includes('isekai')) {
+      genre = 'isekai';
+    } else {
+      await message.reply('Please specify genre.\n{p}anime {genre}:- shonen | seinen | isekai');
+      return;
+    }
 
     try {
-      const response = await axios.get(`https://api.waifu.pics/sfw/${category}`);
-      const imageUrl = response.data.url;
+      const loadingMessage = await message.reply('𝗟𝗢𝗔𝗗𝗜𝗡𝗚 𝗥𝗔𝗡𝗗𝗢𝗠 𝗔𝗡𝗜𝗠𝗘 𝗥𝗘𝗖𝗢𝗠𝗠𝗘𝗡𝗗𝗔𝗧𝗜𝗢𝗡..');
 
-      const imageName = `${category}.jpg`;
-      const imagePath = path.join(__dirname, 'cache', imageName);
+      const apiUrl = `https://anime-reco.vercel.app/anime?genre=${genre}`;
+      const response = await axios.get(apiUrl);
 
-      const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-      await fs.outputFile(imagePath, imageResponse.data);
+      if (response.data.anime && response.data.videoLink) {
+        const animeName = response.data.anime;
+        const videoUrl = response.data.videoLink;
 
-      api.setMessageReaction("🖼️", event.messageID, (err) => {}, true);
+        console.log(`${animeName}`);
+        console.log(`${videoUrl}`);
 
-      await api.sendMessage(
-        {
-          attachment: fs.createReadStream(imagePath),
-          body: `🌸 Here's your random ${category} image:`
-        },
-        event.threadID,
-        (err, info) => {
-          if (err) {
-            console.error(`Error sending image for ${category}:`, err);
-            api.setMessageReaction("❌", event.messageID, (err) => {}, true);
-          } else {
-            api.setMessageReaction("✅", event.messageID, (err) => {}, true);
-          }
+        const cacheFilePath = __dirname + `/cache/anime_${Date.now()}.mp4`;
+        await this.downloadVideo(videoUrl, cacheFilePath);
+
+        if (fs.existsSync(cacheFilePath)) {
+          await message.reply({
+            body: `𝗥𝗘𝗖𝗢𝗠𝗠𝗘𝗡𝗗𝗘𝗗 𝗔𝗡𝗜𝗠𝗘 : ${animeName}`,
+            attachment: fs.createReadStream(cacheFilePath),
+          });
+
+          fs.unlinkSync(cacheFilePath);
+        } else {
+          message.reply("Error downloading the video.");
         }
-      );
+      } else {
+        message.reply("API CHALENA MUJI(API ISSUE)");
+      }
 
-      await fs.remove(imagePath);
-    } catch (error) {
-      console.error(`Error in anime command (${category}):`, error);
-      api.sendMessage(`Sorry, I couldn't fetch a ${category} image right now. Please try again later.`, event.threadID, event.messageID);
-      api.setMessageReaction("❌", event.messageID, (err) => {}, true);
+      await message.unsend(loadingMessage.messageID);
+    } catch (err) {
+      console.error(err);
+      message.reply("An error occurred while processing the anime command.");
     }
-  }
+  },
+
+  downloadVideo: async function (url, cacheFilePath) {
+    try {
+      const response = await axios({
+        method: "GET",
+        url: url,
+        responseType: "stream"
+      });
+
+      const writer = fs.createWriteStream(cacheFilePath);
+      response.data.pipe(writer);
+
+      return new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  },
 };
